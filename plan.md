@@ -278,9 +278,14 @@ under OpenTUI for ~free if that call is made.
       inline parsing (bold/italic/code/link), block layouts (heading/para/list/quote/hr;
       code plain-clipped, diff prefix-coloured), per-block layout cache (id:width:theme),
       cumulative line index + `sliceLines` + `firstBlockAt`. 22 tests green.
-- [ ] **Milestone 3 — Ink viewport.** `<MarkdownViewport>`: path-A composition (spans →
-      one ANSI `<Text>`), virtualised visible slice, scroll, resize. **Acceptance demo:
-      render a real upstream PR's review comments in an `inbox` detail pane** (data via
-      `gh-pr-comments`).
+- [x] **Milestone 3 — Ink viewport.** `src/ink`: `<MarkdownViewport>` (path-A — visible
+      slice → one composed ANSI `<Text>`, mounts O(viewport) regardless of doc size),
+      `linesToAnsi` composer (chalk, graceful colour degrade), `useMarkdownScroll` keyboard
+      controller (primitives, not owned bindings), `examples/demo.tsx` live runner
+      (`npx tsx examples/demo.tsx`). 29 tests green; exit criterion verified (500-para doc →
+      ≤ viewport rows mounted). Fixed a raw-ESC-byte-in-source bug in the ansi test.
+- [ ] **Acceptance demo (next):** render a real upstream PR's review comments in an
+      `inbox` detail pane (data via `gh-pr-comments`). Needs the `inbox.tsx` detail-view
+      integration — the dogfood target.
 - [ ] Milestone 4 — code syntax highlighting (deferred from M2). Milestone 5 — streaming.
       Milestone 6 — structured diff. Milestone 7 — publish.
