@@ -267,4 +267,20 @@ under OpenTUI for ~free if that call is made.
       10k doc, 4.1ms on the 5k diff → throttle-bound (~26ms), well under 50ms. Method:
       `live-tty-probe.js` measures `process.cpuUsage` per frame vs a fake TTY (ITL's
       ~26ms floor makes wall-clock unusable for latency).
-- [ ] Graduate to `@kud/ink-markdown` package + PRD Milestone 1 (via `/k-project`)
+- [x] Graduated to `@kud/ink-markdown` package (repo live, kud-site README + docs)
+
+## Build progress (post-spike)
+
+- [x] **Milestone 1 — core document model.** `src/core`: line-scan segmenter, FNV-1a
+      content-hash block identity, `create`/`updateMarkdownDocument`. Zero Ink imports.
+- [x] **Milestone 2 — terminal layout engine.** `src/core/spans.ts` + `layout.ts`:
+      semantic styled spans (not ANSI), display-width-aware span wrapping (Unicode/CJK),
+      inline parsing (bold/italic/code/link), block layouts (heading/para/list/quote/hr;
+      code plain-clipped, diff prefix-coloured), per-block layout cache (id:width:theme),
+      cumulative line index + `sliceLines` + `firstBlockAt`. 22 tests green.
+- [ ] **Milestone 3 — Ink viewport.** `<MarkdownViewport>`: path-A composition (spans →
+      one ANSI `<Text>`), virtualised visible slice, scroll, resize. **Acceptance demo:
+      render a real upstream PR's review comments in an `inbox` detail pane** (data via
+      `gh-pr-comments`).
+- [ ] Milestone 4 — code syntax highlighting (deferred from M2). Milestone 5 — streaming.
+      Milestone 6 — structured diff. Milestone 7 — publish.
