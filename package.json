@@ -1,0 +1,59 @@
+{
+  "name": "@kud/ink-markdown",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "A high-performance Markdown / code / diff rendering engine for Ink 7.",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "build:watch": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
+  },
+  "homepage": "https://kud.io/projects/ink-markdown",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kud/ink-markdown.git"
+  },
+  "author": "Erwann Mest <m@kud.io>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "ink": "7.x",
+    "react": "19.x"
+  },
+  "dependencies": {
+    "cli-highlight": "2.1.11",
+    "markdown-it": "14.3.0",
+    "slice-ansi": "9.0.0",
+    "string-width": "8.2.2",
+    "wrap-ansi": "10.0.0"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "14.1.2",
+    "@types/node": "26.1.1",
+    "@types/react": "19.2.17",
+    "ink": "7.1.0",
+    "react": "19.2.7",
+    "tsup": "8.5.1",
+    "typescript": "5.9.3",
+    "vitest": "4.1.10"
+  }
+}

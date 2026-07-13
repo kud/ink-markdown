@@ -1,0 +1,4 @@
+node_modules/
+spike/**/node_modules/
+dist/
+*.tsbuildinfo
