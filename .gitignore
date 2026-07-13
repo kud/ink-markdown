@@ -1,4 +1,6 @@
 node_modules/
-spike/**/node_modules/
 dist/
 *.tsbuildinfo
+
+# Local-only: throwaway proof-of-concept spike (findings captured in plan.md)
+spike/
