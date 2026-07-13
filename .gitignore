@@ -2,5 +2,7 @@ node_modules/
 dist/
 *.tsbuildinfo
 
-# Local-only: throwaway proof-of-concept spike (findings captured in plan.md)
+# Local-only: internal planning artifacts + throwaway spike (public docs live in docs/)
+prd.md
+plan.md
 spike/
