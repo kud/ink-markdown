@@ -17,6 +17,11 @@ jobs:
         with:
           node-version: "24"
           registry-url: "https://registry.npmjs.org"
+          # npm's trusted-publishing docs call for this on release builds: the
+          # cache step writes its own .npmrc, which can sit between the OIDC
+          # token exchange and the registry. Off here, on in ci.yml, where there
+          # is no token exchange to disturb and the cache actually pays for itself.
+          package-manager-cache: false
       - run: npm install -g npm@latest
       - run: npm ci
       # A tag is the only thing standing between a commit and the registry, and
