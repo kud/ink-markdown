@@ -19,5 +19,10 @@ jobs:
           registry-url: "https://registry.npmjs.org"
       - run: npm install -g npm@latest
       - run: npm ci
+      # A tag is the only thing standing between a commit and the registry, and
+      # an npm version cannot be taken back. Gate the publish on the same checks
+      # the repo runs locally rather than trusting the tagger to have run them.
+      - run: npm run typecheck
+      - run: npm test
       - run: npm run build
       - run: npm publish --access public
