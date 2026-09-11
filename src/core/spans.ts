@@ -83,14 +83,21 @@ const append = (line: TextSpan[], text: string, style?: SpanStyle): void => {
   else line.push(style ? { text, style } : { text })
 }
 
+// A bare URL is the last alternative, so a `[text](url)` link wins over the URL
+// inside it. Trailing punctuation is left out of the match: `see https://x.y.`
+// links `https://x.y`, and a URL wrapped in parentheses keeps its closer.
 const INLINE =
-  /(\*\*([^*]+)\*\*|`([^`]+)`|\*([^*]+)\*|_([^_]+)_|\[([^\]]+)\]\(([^)]+)\))/g
+  /(\*\*([^*]+)\*\*|`([^`]+)`|\*([^*]+)\*|_([^_]+)_|\[([^\]]+)\]\(([^)]+)\)|(https?:\/\/[^\s<>()]+?)(?=[.,;:!?]*(?:\s|$|\))))/g
 
-// Minimal inline parser → styled spans: bold, italic, inline code, links. Markdown-it can
-// replace this later for fuller GFM inline; this covers the common PR-comment cases.
+// Minimal inline parser → styled spans: bold, italic, inline code, links,
+// bare URLs. Markdown-it can replace this later for fuller GFM inline; this
+// covers the common PR-comment cases. Bare URLs are styled as links because a
+// pasted `PR: https://…` is usually the one actionable thing in a comment, and
+// it was the only thing rendered plain.
 export const parseInline = (text: string, theme: MarkdownTheme): TextSpan[] => {
   const spans: TextSpan[] = []
   const re = new RegExp(INLINE)
+  const link = { color: theme.link, underline: true }
   let last = 0
   let m: RegExpExecArray | null
   while ((m = re.exec(text)) !== null) {
@@ -102,8 +109,8 @@ export const parseInline = (text: string, theme: MarkdownTheme): TextSpan[] => {
       spans.push({ text: m[4], style: { italic: true } })
     else if (m[5] !== undefined)
       spans.push({ text: m[5], style: { italic: true } })
-    else if (m[6] !== undefined)
-      spans.push({ text: m[6], style: { color: theme.link, underline: true } })
+    else if (m[6] !== undefined) spans.push({ text: m[6], style: link })
+    else if (m[8] !== undefined) spans.push({ text: m[8], style: link })
     last = m.index + m[0].length
   }
   if (last < text.length) spans.push({ text: text.slice(last) })

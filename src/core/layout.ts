@@ -161,7 +161,17 @@ export const createMarkdownLayout = (
   let reused = 0
   let computed = 0
 
-  for (const block of document.blocks) {
+  // One blank line between any two adjacent blocks, none before the first or
+  // after the last. Every Markdown renderer separates blocks with vertical
+  // space; without it a bold-paragraph "heading" runs straight into the list
+  // beneath it and the eye has to parse where one thought ends. A list is one
+  // block, so its items stay tight; a fence is one block, so its lines do; a
+  // rule gets air on both sides. Pushed HERE rather than inside layoutBlock so
+  // the per-block cache stays a function of the block alone, and `blocks[i]`
+  // still reports its own height — the gap belongs to the document, not to
+  // either neighbour. `lineOffsets` count it, so viewport math stays honest.
+  document.blocks.forEach((block, i) => {
+    if (i > 0) lines.push(toLine(block.id, -1, []))
     const key = `${block.id}:${width}:${themeId}`
     let blockLines = cache?.get(key)
     if (blockLines) {
@@ -179,7 +189,7 @@ export const createMarkdownLayout = (
       lines: blockLines,
     })
     for (const line of blockLines) lines.push(line)
-  }
+  })
 
   return {
     width,

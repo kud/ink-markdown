@@ -73,6 +73,28 @@ describe("parseInline", () => {
       defaultTheme.link,
     )
   })
+
+  it("links a bare URL, leaving trailing punctuation and a wrapping paren out", () => {
+    const spans = parseInline(
+      "PR: https://example.com/pull/1. (see https://example.com/a?b=c)",
+      defaultTheme,
+    )
+    const links = spans.filter((s) => s.style?.underline)
+
+    expect(links.map((s) => s.text)).toEqual([
+      "https://example.com/pull/1",
+      "https://example.com/a?b=c",
+    ])
+    expect(spans.map((s) => s.text).join("")).toBe(
+      "PR: https://example.com/pull/1. (see https://example.com/a?b=c)",
+    )
+  })
+
+  it("lets an explicit link win over the URL inside it", () => {
+    const spans = parseInline("[d](https://e.f)", defaultTheme)
+
+    expect(spans.map((s) => s.text)).toEqual(["d"])
+  })
 })
 
 describe("createMarkdownLayout", () => {
@@ -81,6 +103,28 @@ describe("createMarkdownLayout", () => {
 
     expect(result.totalLines).toBe(result.lines.length)
     expect(result.lines[0].spans[0].style?.color).toBe(defaultTheme.heading)
+  })
+
+  it("puts one blank line between adjacent blocks and none around the edges", () => {
+    const result = layout("**Summary**\nProse under it.\n\n- one\n- two\n\n---\n\nAfter.", 40)
+    const texts = result.lines.map((line) => line.plainText)
+
+    // paragraph (2 lines), gap, list (2), gap, rule, gap, paragraph
+    expect(texts).toEqual([
+      "Summary Prose under it.",
+      "",
+      "• one",
+      "• two",
+      "",
+      "─".repeat(40),
+      "",
+      "After.",
+    ])
+    expect(result.totalLines).toBe(result.lines.length)
+    // Offsets point at each block's first line, gaps counted.
+    expect(result.lineOffsets).toEqual([0, 2, 5, 7])
+    // The gap belongs to the document, not to either block.
+    expect(result.blocks.map((b) => b.height)).toEqual([1, 2, 1, 1])
   })
 
   it("strips fences and clips code lines to width", () => {
