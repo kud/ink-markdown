@@ -8,6 +8,7 @@ export type MarkdownBlockType =
   | "list"
   | "quote"
   | "thematic-break"
+  | "table"
 
 export type MarkdownBlock = {
   id: string

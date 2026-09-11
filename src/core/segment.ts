@@ -6,6 +6,9 @@ const HEADING = /^#{1,6}\s+/
 const THEMATIC_BREAK = /^(-{3,}|\*{3,}|_{3,})\s*$/
 const QUOTE = /^>\s?/
 const LIST = /^(\s*)([-*+]|\d+\.)\s+/
+// A pipe-table row: starts and ends with a pipe. Two such lines in a row are
+// a table; one on its own is prose that happens to start with a bar.
+const TABLE_ROW = /^\s*\|.*\|\s*$/
 
 // Line-scan segmenter → renderer-independent top-level blocks with stable, content-based
 // identity. Minimal GFM-ish block set; inline parsing happens later in the layout stage.
@@ -101,6 +104,14 @@ export const segment = (source: string): MarkdownBlock[] => {
       continue
     }
 
+    if (TABLE_ROW.test(line) && i + 1 < lines.length && TABLE_ROW.test(lines[i + 1])) {
+      let j = i
+      while (j < lines.length && TABLE_ROW.test(lines[j])) j++
+      push("table", i, j)
+      i = j
+      continue
+    }
+
     // Paragraph — consume consecutive non-blank, non-structural lines.
     let j = i
     while (
@@ -110,7 +121,8 @@ export const segment = (source: string): MarkdownBlock[] => {
       !HEADING.test(lines[j]) &&
       !THEMATIC_BREAK.test(lines[j]) &&
       !QUOTE.test(lines[j]) &&
-      !LIST.test(lines[j])
+      !LIST.test(lines[j]) &&
+      !(TABLE_ROW.test(lines[j]) && j + 1 < lines.length && TABLE_ROW.test(lines[j + 1]))
     )
       j++
     push("paragraph", i, j)

@@ -1,4 +1,5 @@
 import { hash } from "./hash.js"
+import { layoutTable } from "./table.js"
 import type { MarkdownBlock, MarkdownDocument } from "./document.js"
 import {
   type BlockLayout,
@@ -111,6 +112,10 @@ const layoutBlock = (
             width,
           ),
         )
+      break
+    }
+    case "table": {
+      rows.push(...layoutTable(text, width, theme))
       break
     }
     default: {

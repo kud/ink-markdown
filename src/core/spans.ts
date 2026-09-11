@@ -87,7 +87,7 @@ const append = (line: TextSpan[], text: string, style?: SpanStyle): void => {
 // inside it. Trailing punctuation is left out of the match: `see https://x.y.`
 // links `https://x.y`, and a URL wrapped in parentheses keeps its closer.
 const INLINE =
-  /(\*\*([^*]+)\*\*|`([^`]+)`|\*([^*]+)\*|_([^_]+)_|\[([^\]]+)\]\(([^)]+)\)|(https?:\/\/[^\s<>()]+?)(?=[.,;:!?]*(?:\s|$|\))))/g
+  /(\*\*([^*]+)\*\*|`([^`]+)`|\*([^*]+)\*|_([^_]+)_|\[((?:[^\[\]]|\[[^\[\]]*\])+)\]\(([^)]+)\)|(https?:\/\/[^\s<>()]+?)(?=[.,;:!?]*(?:\s|$|\))))/g
 
 // Minimal inline parser → styled spans: bold, italic, inline code, links,
 // bare URLs. Markdown-it can replace this later for fuller GFM inline; this

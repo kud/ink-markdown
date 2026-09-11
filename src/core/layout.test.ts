@@ -95,6 +95,20 @@ describe("parseInline", () => {
 
     expect(spans.map((s) => s.text)).toEqual(["d"])
   })
+
+  it("links text that itself holds brackets, as Jira labels do", () => {
+    const spans = parseInline(
+      "[[TAP] Flowthrough → Restore](https://example.com/f) section",
+      defaultTheme,
+    )
+
+    expect(spans.filter((s) => s.style?.underline).map((s) => s.text)).toEqual([
+      "[TAP] Flowthrough → Restore",
+    ])
+    expect(spans.map((s) => s.text).join("")).toBe(
+      "[TAP] Flowthrough → Restore section",
+    )
+  })
 })
 
 describe("createMarkdownLayout", () => {
