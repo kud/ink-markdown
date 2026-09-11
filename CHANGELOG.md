@@ -4,6 +4,15 @@ All notable changes to this project are documented here.
 
 ---
 
+## 0.3.0 — 2026-09-11
+
+### Highlights
+
+- Pipe tables now render as a proper block instead of being flattened into a run of piped-together text. Two or more consecutive `| … |` lines are recognised as a `table` — a lone pipe-delimited line still reads as prose. Columns pad to their widest cell and are joined by two spaces with no vertical rule; the separator row becomes a single muted `─` segment per column beneath a bold, heading-coloured header, and `---:` right-aligns a column. Every row stays on one line: when a table would overflow the viewport, its widest column shrinks first (ending in `…`, never below its header's width), and only once every column is at its floor does a row clip like an ordinary code line — no column disappears silently. Empty cells stay blank, including a blank leading header cell for a row-label column, and inline markup still works inside cells. ([0d383d2](https://github.com/kud/ink-markdown/commit/0d383d2507666650e935f33a7d449a4c835d3381))
+- Link text may now contain one level of nested square brackets, such as `[[TAP] Flowthrough → Restore](https://…)` — the shape Jira produces for ticket-prefixed titles. The inline parser previously failed to match this pattern and left the whole thing rendered as raw markup instead of a link. ([0d383d2](https://github.com/kud/ink-markdown/commit/0d383d2507666650e935f33a7d449a4c835d3381))
+
+---
+
 ## 0.2.0 — 2026-09-11
 
 ### Highlights
