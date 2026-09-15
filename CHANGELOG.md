@@ -4,6 +4,14 @@ All notable changes to this project are documented here.
 
 ---
 
+## 0.3.1 — 2026-09-15
+
+### Fixes
+
+- A theme colour given as a hex value, such as `#FF8C00`, now actually renders instead of coming out unstyled. `MarkdownTheme` accepts the same strings Ink's `<Text color>` does — names and hexes alike — but the ANSI composer looked up every colour as a Chalk property, and a hex isn't one, so it silently resolved to nothing. Hexes now route through `chalk.hex()` / `chalk.bgHex()`. Found via cockpit's ticket drill, whose orange links and cyan inline code had been rendering plain since the theme was introduced. ([ee1a531](https://github.com/kud/ink-markdown/commit/ee1a5319edb1312baa7dfd76f60369c2e0825466))
+
+---
+
 ## 0.3.0 — 2026-09-11
 
 ### Highlights
