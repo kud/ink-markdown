@@ -29,6 +29,18 @@ describe("lineToAnsi", () => {
 
     expect(strip(out)).toBe("hi")
   })
+
+  // A host passes its design tokens through the theme, and those are hexes.
+  // Chalk exposes a hex through `.hex()`, not as a property, so the plain
+  // chain lookup found nothing and the span went out unstyled.
+  it("colours a hex the way it colours a name", () => {
+    const named = lineToAnsi(line([{ text: "x", style: { color: "cyan" } }]))
+    const hex = lineToAnsi(line([{ text: "x", style: { color: "#FF8C00" } }]))
+    expect(strip(hex)).toBe("x")
+    // Only meaningful where chalk has colour at all; a colourless runner
+    // styles neither, and the assertion holds trivially.
+    expect(hex === "x").toBe(named === "x")
+  })
 })
 
 describe("linesToAnsi", () => {
