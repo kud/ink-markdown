@@ -10,7 +10,6 @@ export default defineConfig({
   external: [
     "react",
     "ink",
-    "markdown-it",
     "cli-highlight",
     "wrap-ansi",
     "slice-ansi",
