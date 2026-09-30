@@ -4,6 +4,14 @@ All notable changes to this project are documented here.
 
 ---
 
+## 0.3.2 — 2026-10-01
+
+### Security
+
+- `markdown-it` is no longer a dependency. It was declared but never imported — the parser is hand-rolled — yet its exact pin at 14.3.0 put a vulnerable version in every consumer's tree, flagged for two quadratic-time `linkify` paths (fixed upstream in 14.3.1). The code was never reachable through this library; dropping the package clears the alert for good. ([c14bcbc](https://github.com/kud/ink-markdown/commit/c14bcbc0f5fdd7d5adbea1738de0fb559d559a29), [9780c03](https://github.com/kud/ink-markdown/commit/9780c03d4a71817a935f00fa0ddb677c80e2f90a))
+
+---
+
 ## 0.3.1 — 2026-09-15
 
 ### Fixes
