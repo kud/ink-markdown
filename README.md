@@ -5,7 +5,7 @@
 ![Status](https://img.shields.io/badge/status-alpha-yellow?style=flat-square)
 ![MIT](https://img.shields.io/badge/licence-MIT-22C55E?style=flat-square)
 
-**A high-performance Markdown / code / diff rendering engine for Ink 7.**
+**A high-performance Markdown / code / diff rendering engine for Ink.**
 
 <a href="https://kud.io/projects/ink-markdown">Website</a> · <a href="https://kud.io/projects/ink-markdown/docs">Documentation</a>
 
@@ -34,7 +34,7 @@ Ink apps that display large, code-heavy, streaming documents (AI responses, code
 npm install @kud/ink-markdown
 ```
 
-`ink-markdown` targets **Ink 7.x** and **React 19.x** as peer dependencies, and requires **Node.js 20+**.
+`ink-markdown` works with **Ink 7 and 8** and **React 19** as peer dependencies, and requires **Node.js 20+** (Ink 8 itself needs Node.js 22+).
 
 ## Usage
 
