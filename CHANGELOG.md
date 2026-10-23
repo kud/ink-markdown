@@ -4,6 +4,18 @@ All notable changes to this project are documented here.
 
 ---
 
+## 0.3.3 — 2026-10-23
+
+### Compatibility
+
+- Ink 8 is now supported alongside Ink 7. The peer ranges widen from `ink: 7.x` and `react: 19.x` to `ink: >=7` and `react: >=19`, so an app can move to Ink 8 without an install conflict. Nothing in the library touches the surfaces Ink 8 changed (`minWidth`/`maxWidth` strings, the stream typings, `useInput` control sequences), and the test suite passes unchanged against Ink 8.0.0 and React 19.3.1.
+
+### Maintenance
+
+- Development dependencies brought up to date: Ink 8.0.0, React 19.3.1, Vitest 5, tsup 9, and current `@types/react` and `@types/node`. The unused `@types/markdown-it` is gone, left behind when `markdown-it` itself was dropped in 0.3.2.
+
+---
+
 ## 0.3.2 — 2026-10-01
 
 ### Security
