@@ -4,6 +4,18 @@ All notable changes to this project are documented here.
 
 ---
 
+## Unreleased
+
+### Breaking
+
+- Node.js 22 is now the minimum supported version: `engines.node` moves from `>=20.0.0` to `>=22`. Node 20 reached end of life in April 2026, and the toolchain the package is built and tested with (Ink 8, Vitest 5, tsup 9) already requires Node 22. Consumers still on Node 20 should stay on 0.3.x.
+
+### Maintenance
+
+- CI now tests on Node 22 and the current LTS (`lts/*`); the release workflow builds and publishes on `lts/*`. `actions/checkout` and `actions/setup-node` move to v7.
+
+---
+
 ## 0.3.3 — 2026-10-23
 
 ### Compatibility

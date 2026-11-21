@@ -12,10 +12,10 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
-          node-version: "24"
+          node-version: lts/*
           registry-url: "https://registry.npmjs.org"
           # npm's trusted-publishing docs call for this on release builds: the
           # cache step writes its own .npmrc, which can sit between the OIDC
